@@ -38,7 +38,8 @@ jobs:
           rm -rf "$PR_NUMBER"
         fi  
         mv build "$PR_NUMBER"
-        git add "$PR_NUMBER"
+        echo "$PR_NUMBER"
+        git add "$PR_NUMBER"/
         git status
         git commit --allow-empty -m ":heavy_check_mark: Сборка ${{ github.repository }}#"$PR_NUMBER""
     
