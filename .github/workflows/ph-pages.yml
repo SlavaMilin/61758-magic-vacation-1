@@ -24,13 +24,16 @@ jobs:
       run: |
         npm install
         npm run build
+        
+    - name: Set env
+      run: |
+        echo ::set-env name=PR_NUMBER::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
     
     - name: Commit files
       run: |
         git config --local user.email "help@htmlacademy.ru"
         git config --local user.name "keksobot"
         git config --local pull.rebase false
-        PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
         git checkout gh-pages || git checkout --orphan gh-pages
         if [[ -e "$PR_NUMBER" ]]; then
           rm -rf "$PR_NUMBER"
@@ -42,3 +45,16 @@ jobs:
     - name: Push changes
       run: |
         git push origin gh-pages
+        
+    - name: Get pullrequest data
+      uses: octokit/request-action@v2.0.2
+      id: pull_request
+      with:
+          route: GET /repos/:repository/pulls/:pr_number
+          repository: ${{ github.repository }}
+          pr_number: ${{ env.PR_NUMBER }}
+          
+    - name: Update pr description
+      run: |
+        echo ${{ fromJson(steps.pull_request.outputs.data).body }}
+
