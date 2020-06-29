@@ -39,6 +39,7 @@ jobs:
         fi  
         mv build "$PR_NUMBER"
         git add "$PR_NUMBER"
+        git status
         git commit --allow-empty -m ":heavy_check_mark: Сборка ${{ github.repository }}#"$PR_NUMBER""
     
     - name: Push changes
