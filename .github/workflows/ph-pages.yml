@@ -27,6 +27,7 @@ jobs:
       run: |
         git config --local user.email "help@htmlacademy.ru"
         git config --local user.name "keksobot"
+        git config --local pull.rebase false
         PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
         if $( git pull origin gh-pages --allow-unrelated-histories ); then
           git checkout gh-pages
