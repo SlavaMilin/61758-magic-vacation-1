@@ -63,9 +63,10 @@ jobs:
           echo ::set-env name=NEED_UPDATE_BODY::$(pring "false")
         else
           echo ::set-env name=NEED_UPDATE_BODY::$(print "true")
+          echo true
         fi
     - name: Update pr description
-      if: contains(env.NEED_UPDATE_BODY, 'true')
+      if: ! $("${{ fromJson(steps.pull_request.outputs.data).body }}" =~ ":boom:")
       uses: octokit/request-action@v2.x
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
