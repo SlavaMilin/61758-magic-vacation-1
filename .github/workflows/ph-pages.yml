@@ -60,12 +60,12 @@ jobs:
     - name: Parse pr data
       run: |
         if [[ "${{ fromJson(steps.pull_request.outputs.data).body }}" =~ ":boom:" ]]; then
-          echo ::set-env name=NEED_UPDATE_BODY::$(echo false)
+          echo ::set-env name=NEED_UPDATE_BODY::$(pring "false")
         else
-          echo ::set-env name=NEED_UPDATE_BODY::$(echo true)
+          echo ::set-env name=NEED_UPDATE_BODY::$(print "true")
         fi
     - name: Update pr description
-      if: $NEED_UPDATE_BODY == true
+      if: env.NEED_UPDATE_BODY == "true"
       uses: octokit/request-action@v2.x
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -74,3 +74,4 @@ jobs:
           repository: ${{ github.repository }}
           pr_number: ${{ env.PR_NUMBER }}
           body: "${{ fromJson(steps.pull_request.outputs.data).body }} \n\n--- \n :boom: https://${{ github.actor }}.github.io/${{ env.REPOSITORY_NAME }}/${{ env.PR_NUMBER }}/"
+
