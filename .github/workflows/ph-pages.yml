@@ -58,7 +58,7 @@ jobs:
           
     - name: Parse pr data
       run: |
-        if [[ ${{ fromJson(steps.pull_request.outputs.data).body }} =~ ":boom:" ]]; then
+        if [[ "${{ fromJson(steps.pull_request.outputs.data).body }}" =~ ":boom:" ]]; then
           echo ::set-env name=NEED_UPDATE_BODY::$(echo false)
         else
           echo ::set-env name=NEED_UPDATE_BODY::$(echo true)
