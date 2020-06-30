@@ -32,7 +32,7 @@ jobs:
     
     - name: Commit files
       run: |
-        git config --local user.email "help@htmlacademy.ru"
+        git config --local user.email "keks@htmlacademy.ru"
         git config --local user.name "keksobot"
         git config --local pull.rebase false
         git checkout gh-pages || git checkout --orphan gh-pages
