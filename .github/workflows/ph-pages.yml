@@ -71,5 +71,6 @@ jobs:
           route: POST /repos/:repository/pulls/:pr_number
           repository: ${{ github.repository }}
           pr_number: ${{ env.PR_NUMBER }}
-          body: "${{ fromJson(steps.pull_request.outputs.data).body }} \n\n--- \n :boom: https://${{ github.actor }}.github.io/${{ env.REPOSITORY_NAME }}/${{ env.PR_NUMBER }}/"
+          body: |
+           "${{ fromJson(steps.pull_request.outputs.data).body }} \n\n--- \n :boom: https://${{ github.actor }}.github.io/${{ env.REPOSITORY_NAME }}/${{ env.PR_NUMBER }}/"
 
