@@ -73,7 +73,5 @@ jobs:
           repository: ${{ github.repository }}
           pr_number: ${{ env.PR_NUMBER }}
           body: |
-            "${{ fromJson(steps.pull_request.outputs.data).body }}
-            ---
-            :boom: https://${{ github.actor }}.github.io/${{ github.repository }}/${{ env.PR_NUMBER }}/"
+            "${{ fromJson(steps.pull_request.outputs.data).body }} \n --- \n :boom: https://${{ github.actor }}.github.io/${{ github.repository }}/${{ env.PR_NUMBER }}/"
 
