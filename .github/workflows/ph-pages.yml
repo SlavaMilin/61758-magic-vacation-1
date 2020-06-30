@@ -56,6 +56,16 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Update pr description
-      run: |
-        echo ${{ fromJson(steps.pull_request.outputs.data).body }}
+      if: ${{ fromJson(steps.pull_request.outputs.data).body }} =~ :boom:
+      uses: octokit/request-action@v2.x
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          route: POST /repos/:repository/pulls/:pr_number
+          repository: ${{ github.repository }}
+          pr_number: ${{ env.PR_NUMBER }}
+          body: |
+            ${{ fromJson(steps.pull_request.outputs.data).body }}
+            ---
+            :boom: [https://${{ github.actor }}.github.io/${{ github.repository }}/${{ env.PR_NUMBER }}/][https://${{ github.actor }}.github.io/${{ github.repository }}/${{ env.PR_NUMBER }}/]
 
