@@ -66,7 +66,7 @@ jobs:
           echo true
         fi
     - name: Update pr description
-      if: ! $("${{ fromJson(steps.pull_request.outputs.data).body }}" =~ ":boom:")
+      if: ! ${{ fromJson(steps.pull_request.outputs.data).body }} =~ ":boom:"
       uses: octokit/request-action@v2.x
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
